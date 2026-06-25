@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Customer Review Form</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+}
+
+.container{
+    background:white;
+    width:400px;
+    padding:25px;
+    border-radius:15px;
+    box-shadow:0 0 15px rgba(0,0,0,0.1);
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+    color:#333;
+}
+
+input, textarea{
+    width:100%;
+    padding:12px;
+    margin-bottom:15px;
+    border:1px solid #ccc;
+    border-radius:8px;
+    outline:none;
+}
+
+textarea{
+    resize:none;
+}
+
+.rating{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.star{
+    font-size:35px;
+    color:#ccc;
+    cursor:pointer;
+    transition:0.2s;
+}
+
+.star.active{
+    color:gold;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#007bff;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#0056b3;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Customer Review</h2>
+
+    <input type="text" id="name" placeholder="Customer Name">
+
+    <input type="tel" id="phone" placeholder="Phone Number">
+
+    <input type="email" id="email" placeholder="Email Address">
+
+    <textarea id="review" rows="4" placeholder="Write your review"></textarea>
+
+    <div class="rating">
+        <span class="star" data-value="1">★</span>
+        <span class="star" data-value="2">★</span>
+        <span class="star" data-value="3">★</span>
+        <span class="star" data-value="4">★</span>
+        <span class="star" data-value="5">★</span>
+    </div>
+
+    <button onclick="submitReview()">Submit Review</button>
+</div>
+
+<script>
+let rating = 0;
+
+const stars = document.querySelectorAll(".star");
+
+stars.forEach(star => {
+    star.addEventListener("click", () => {
+        rating = star.getAttribute("data-value");
+
+        stars.forEach(s => s.classList.remove("active"));
+
+        for(let i = 0; i < rating; i++){
+            stars[i].classList.add("active");
+        }
+    });
+});
+
+function submitReview(){
+
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
+    const review = document.getElementById("review").value;
+
+    if(name === "" || phone === "" || email === "" || review === "" || rating == 0){
+        alert("Please fill all fields and select a rating.");
+        return;
+    }
+
+    alert(
+        "Review Submitted Successfully!\n\n" +
+        "Name: " + name +
+        "\nRating: " + rating + " Star(s)"
+    );
+}
+</script>
+
+</body>
+</html>
