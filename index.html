@@ -1,3 +1,44 @@
 const scriptURL = "https://script.google.com/macros/s/AKfycbz2rrQkODhX13VwU1F31pxsk291CkYQK1Rj1zZbZXGtZS0--xb9i-cGfZ7PBsLnwatH8Q/exec";
-</body>
-</html>
+let rating = 0;
+
+document.querySelectorAll(".star").forEach(star => {
+    star.addEventListener("click", () => {
+        rating = star.getAttribute("data-value");
+
+        document.querySelectorAll(".star").forEach(s => s.classList.remove("active"));
+
+        for(let i = 0; i < rating; i++){
+            document.querySelectorAll(".star")[i].classList.add("active");
+        }
+    });
+});
+
+function submitReview(){
+
+    const name = document.getElementById("name").value;
+    const phone = document.getElementById("phone").value;
+    const email = document.getElementById("email").value;
+    const review = document.getElementById("review").value;
+
+    if(name === "" || phone === "" || email === "" || review === "" || rating == 0){
+        alert("Please fill all fields and select rating");
+        return;
+    }
+
+    fetch(scriptURL, {
+        method: "POST",
+        body: JSON.stringify({
+            name: name,
+            phone: phone,
+            email: email,
+            review: review,
+            rating: rating
+        })
+    })
+    .then(() => {
+        alert("Review Submitted Successfully!");
+    })
+    .catch(() => {
+        alert("Error submitting review");
+    });
+}
